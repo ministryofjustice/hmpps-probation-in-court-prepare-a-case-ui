@@ -81,10 +81,33 @@ export default {
       },
       agent: new AgentConfig(Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000))),
     },
+    userPreferencesApi: {
+      url: get('USER_PREFERENCE_SERVICE_URL', 'http://localhost:9093', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('DEFAULT_TIMEOUT', 5000)),
+        deadline: Number(get('DEFAULT_TIMEOUT', 5000)),
+      },
+      agent: new AgentConfig(Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000))),
+    },
+    courtCaseServiceApi: {
+      url: get('COURT_CASE_SERVICE_URL', 'http://localhost:9092', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('DEFAULT_TIMEOUT', 5000)),
+        deadline: Number(get('DEFAULT_TIMEOUT', 5000)),
+      },
+      agent: new AgentConfig(Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000))),
+    },
   },
   sqs: {
     audit: auditConfig(),
   },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
+  features: {
+    sendPncAndCroWithOffenderUpdates: false,
+    persistFilters: get('PERSIST_FILTERS', 'true'),
+    clickAnalytics: get('ENABLE_CLICK_ANALYTICS', 'false')
+  }
 }
