@@ -5,7 +5,7 @@
 {% set title = "My courts" %}
 
 {%- set courtOptions = [] -%}
-{%- for court in params.availableCourts -%}
+{%- for court in availableCourts -%}
   {{ courtOptions.push({
     value: court.code,
     text: court.name
@@ -24,9 +24,9 @@
 
   <nav aria-label="Court selection" class="govuk-!-margin-bottom-8">
 
-    {% if params.chosenCourts | length %}
-      {%- for court in params.availableCourts -%}
-        {%- for chosen in params.chosenCourts -%}
+    {% if chosenCourts | length %}
+      {%- for court in availableCourts -%}
+        {%- for chosen in chosenCourts -%}
           {% if chosen === court.code %}
             <p class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-2">
               <a href="/select-court/{{ court.code }}" class="govuk-link govuk-link--no-visited-state">{{ court.name }}</a>

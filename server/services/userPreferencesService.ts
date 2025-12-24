@@ -1,5 +1,6 @@
 import UserPreferencesApiClient from '../data/userPreferencesApiClient'
 import config from '../config'
+import {UserPreferencesResponse} from '../@types/UserPreferencesResponse'
 
 export default class UserPreferencesService {
 
@@ -9,22 +10,16 @@ export default class UserPreferencesService {
     this.client = client
   }
 
-  //TODO: define response objects
-  getCourts = async (userId: string, token: string): Promise<any> => {
+  getCourts = async (userId: string, token: string): Promise<UserPreferencesResponse> => {
     return await this.client.getCourts(userId, token)
   }
 
-  updateCourts = async(userId:string, courts:[]): Promise<any> => {
+  updateCourts = async(userId:string, courts:string[], token: string): Promise<any> => {
     return await this.client.updateCourts(userId, courts)
   }
 
-  getPreferences = async (userId: string, preference: string, token: string) => {
-    const res = await this.client.getPreferences(userId, preference, token)
-    if (res) {
-      //TODO: define response object
-      //return res.status >= 400 ? { isError: true, status: res.status || 500 } : res.data
-    }
-    return { isError: true, status: 500 }
+  getPreferences = async (userId: string, preference: string, token: string): Promise<UserPreferencesResponse> => {
+    return await this.client.getPreferences(userId, preference, token)
   }
 
   //TODO: find better solution than passing the token as param on every request

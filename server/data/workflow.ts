@@ -1,0 +1,50 @@
+const workflow = {
+  "tasks": [
+    {
+      "id": "prep",
+      "states": [
+        {
+          "id": "NOT_STARTED",
+          "isDefault": true,
+          "lang": {
+            "en": {
+              "title": "Not started"
+            }
+          },
+          "cssClass": "govuk-tag--grey"
+        },
+        {
+          "id": "IN_PROGRESS",
+          "lang": {
+            "en": {
+              "title": "Ongoing"
+            }
+          },
+          "cssClass": "govuk-tag--blue"
+        },
+        {
+          "id": "COMPLETE",
+          "lang": {
+            "en": {
+              "title": "Complete"
+            }
+          },
+          "cssClass": "govuk-tag--green"
+        },
+        {
+          "id": "NOT_REQUIRED",
+          "lang": {
+            "en": {
+              "title": "Not required"
+            }
+          },
+          "cssClass": "govuk-tag--orange"
+        }
+      ]
+    }
+  ]
+}
+
+export {
+  workflow
+}

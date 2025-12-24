@@ -26,6 +26,15 @@ services:
       - HMPPS_AUTH_URL=http://hmpps-auth:8080/auth
       - EXAMPLE_API_URL=http://localhost:8080
 
+  hmpps-user-preferences:
+    build: hmpps-user-preferences
+    container_name: hmpps-user-preferences
+    networks:
+      - hmpps
+    restart: always
+    ports:
+      - "9093:3000"
+
   app:
     build:
       context: .

@@ -1,4 +1,5 @@
 import { AgentConfig } from '@ministryofjustice/hmpps-rest-client'
+import {courts} from './data/courts'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -109,5 +110,6 @@ export default {
     sendPncAndCroWithOffenderUpdates: false,
     persistFilters: get('PERSIST_FILTERS', 'true'),
     clickAnalytics: get('ENABLE_CLICK_ANALYTICS', 'false')
-  }
+  },
+  availableCourts: courts,
 }

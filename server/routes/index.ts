@@ -1,11 +1,11 @@
-import { Router } from 'express'
+import {Router} from 'express'
 
 import type { Services } from '../services'
-import { Page } from '../services/auditService'
-import UserCourtController from '../controllers/userCourtController'
-import CourtCaseController from '../controllers/courtCaseController'
-import CaseOutcomesController from '../controllers/caseOutcomeController'
-import {asyncHandler} from "../utils/utils";
+import CourtController from '../controllers/courtController'
+import CaseController from '../controllers/caseController'
+import OutcomeController from '../controllers/outcomeController'
+import StaticPageController from '../controllers/staticPageController'
+import {asyncHandler} from '../utils/utils'
 
 export default function routes({
                                  auditService,
@@ -15,21 +15,23 @@ export default function routes({
 }: Services): Router {
   const router = Router()
 
-  router.get('/', async (req, res, next) => {
-    await auditService.logPageView(Page.EXAMPLE_PAGE, { who: res.locals.user.username, correlationId: req.id })
+  const staticPageController = new StaticPageController(auditService, exampleService)
+  const courtController = new CourtController(userPreferencesService)
+  const caseController = new CaseController(courtCaseService)
+  const outcomesController = new OutcomeController(courtCaseService)
 
-    const currentTime = await exampleService.getCurrentTime()
-    return res.render('pages/index', { currentTime })
-  })
-
-  const courtController = new UserCourtController(userPreferencesService)
-  const courtCaseController = new CourtCaseController(courtCaseService)
-  const caseOutcomesController = new CaseOutcomesController(courtCaseService)
-
+  router.get('/', asyncHandler(staticPageController.index))
   router.get('/my-courts', asyncHandler(courtController.index))
   router.get('/my-courts/edit', asyncHandler(courtController.edit))
   router.get('/my-courts/setup', asyncHandler(courtController.setup))
-  router.put('/my-courts', asyncHandler(courtController.update))
+  router.post('/my-courts/add', asyncHandler(courtController.update))
+  router.get('/my-courts/remove/:courtCode', asyncHandler(courtController.remove))
+  router.post('/my-courts', asyncHandler(courtController.store))
+  router.get('/select-court/:courtCode', asyncHandler(courtController.select))
+
+  router.get('/:courtCode/cases', asyncHandler(caseController.index))
+
+  router.get('/:courtCode/outcomes', asyncHandler(outcomesController.index))
 
   return router
 }
