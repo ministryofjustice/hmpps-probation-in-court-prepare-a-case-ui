@@ -1,4 +1,4 @@
-import {RequestHandler} from "express";
+import { RequestHandler } from 'express'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -24,5 +24,7 @@ export const initialiseName = (fullName?: string): string | null => {
   return `${array[0][0]}. ${array.reverse()[0]}`
 }
 
-export const asyncHandler = (fn: RequestHandler): RequestHandler =>
-  (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+export const asyncHandler =
+  (fn: RequestHandler): RequestHandler =>
+  (req, res, next) =>
+    Promise.resolve(fn(req, res, next)).catch(next)

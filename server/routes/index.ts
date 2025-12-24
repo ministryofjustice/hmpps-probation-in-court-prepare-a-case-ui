@@ -1,17 +1,17 @@
-import {Router} from 'express'
+import { Router } from 'express'
 
 import type { Services } from '../services'
 import CourtController from '../controllers/courtController'
 import CaseController from '../controllers/caseController'
 import OutcomeController from '../controllers/outcomeController'
 import StaticPageController from '../controllers/staticPageController'
-import {asyncHandler} from '../utils/utils'
+import { asyncHandler } from '../utils/utils'
 
 export default function routes({
-                                 auditService,
-                                 exampleService,
-                                 userPreferencesService,
-                                 courtCaseService
+  auditService,
+  exampleService,
+  userPreferencesService,
+  courtCaseService,
 }: Services): Router {
   const router = Router()
 

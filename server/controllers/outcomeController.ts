@@ -1,20 +1,21 @@
 import type { Request, Response } from 'express'
-import {BaseController} from './baseController'
+import BaseController from './baseController'
 import CourtCaseService from '../services/courtCaseService'
 
 export default class OutcomeController extends BaseController {
-
   private readonly service: CourtCaseService
 
   constructor(service: CourtCaseService) {
-    super();
+    super()
     this.service = service
   }
 
   index = async (req: Request, res: Response): Promise<void> => {
-    //todo: implement method
-    const { params: {courtCode} } = req
+    // todo: implement method
+    const {
+      params: { courtCode },
+    } = req
 
-    return res.render('pages/outcomes/index', {courtCode})
+    return res.render('pages/outcomes/index', { courtCode })
   }
 }

@@ -1,9 +1,8 @@
 import UserPreferencesApiClient from '../data/userPreferencesApiClient'
 import config from '../config'
-import {UserPreferencesResponse} from '../@types/UserPreferencesResponse'
+import { UserPreferencesResponse } from '../@types/UserPreferencesResponse'
 
 export default class UserPreferencesService {
-
   public client: UserPreferencesApiClient
 
   constructor(client: UserPreferencesApiClient) {
@@ -11,24 +10,24 @@ export default class UserPreferencesService {
   }
 
   getCourts = async (userId: string, token: string): Promise<UserPreferencesResponse> => {
-    return await this.client.getCourts(userId, token)
+    return this.client.getCourts(userId, token)
   }
 
-  updateCourts = async(userId:string, courts:string[], token: string): Promise<any> => {
-    return await this.client.updateCourts(userId, courts)
+  updateCourts = async (userId: string, courts: string[]): Promise<object> => {
+    return this.client.updateCourts(userId, courts)
   }
 
   getPreferences = async (userId: string, preference: string, token: string): Promise<UserPreferencesResponse> => {
-    return await this.client.getPreferences(userId, preference, token)
+    return this.client.getPreferences(userId, preference, token)
   }
 
-  //TODO: find better solution than passing the token as param on every request
-  updatePreferences = async (userId: string, preference: string, values:[], token: string) => {
-    return await this.client.updatePreferences(userId, preference, values, token)
+  // TODO: find better solution than passing the token as param on every request
+  updatePreferences = async (userId: string, preference: string, values: [], token: string) => {
+    return this.client.updatePreferences(userId, preference, values, token)
   }
 
   getFilters = async (userId: string, filterType: string, token: string) => {
-    const deconstructPersistentFilters = (userPreferences: any) => {
+    const deconstructPersistentFilters = (userPreferences: UserPreferencesResponse) => {
       if (!userPreferences.items) {
         return {}
       }
@@ -47,21 +46,19 @@ export default class UserPreferencesService {
 
         if (key === 'validDate') {
           validDate = new Date(value)
-        } else {
-          if (Object.prototype.hasOwnProperty.call(filters, key)) {
-            // @ts-ignore
-            const currentValue: any = filters[key]
+        } else if (Object.prototype.hasOwnProperty.call(filters, key)) {
+          // @ts-expect-error is necessary as TS doesn't like us accessing properties with unknown names
+          const currentValue: string = filters[key]
 
-            if (Array.isArray(currentValue)) {
-              currentValue.push(value)
-            } else {
-              // @ts-ignore
-              filters[key] = [currentValue, value]
-            }
+          if (Array.isArray(currentValue)) {
+            currentValue.push(value)
           } else {
-            // @ts-ignore
-            filters[key] = value
+            // @ts-expect-error is necessary as TS doesn't like us accessing properties with unknown names
+            filters[key] = [currentValue, value]
           }
+        } else {
+          // @ts-expect-error is necessary as TS doesn't like us accessing properties with unknown names
+          filters[key] = value
         }
       })
 
@@ -69,7 +66,8 @@ export default class UserPreferencesService {
         validDate &&
         validDate.getDate() === today.getDate() &&
         validDate.getMonth() === today.getMonth() &&
-        validDate.getFullYear() === today.getFullYear()) {
+        validDate.getFullYear() === today.getFullYear()
+      ) {
         valid = true
       }
 
@@ -78,7 +76,7 @@ export default class UserPreferencesService {
 
     const preferences = await this.client.getPreferences(userId, filterType, token)
 
-    // @ts-ignore
+    // @ts-expect-error is necessary as TS doesn't like us accessing properties with unknown names
     const [userPreferenceFilters, valid] = deconstructPersistentFilters(preferences)
 
     if (valid && config.features.persistFilters === 'true') {
@@ -88,16 +86,16 @@ export default class UserPreferencesService {
     return {}
   }
 
-  setFilters = async (userId:string, filterType:string, filters: [], token: string) => {
+  setFilters = async (userId: string, filterType: string, filters: [], token: string) => {
     const constructPersistentFilter = (queryParams: object) => {
       const queryArray = []
 
-      Object.keys(queryParams).forEach((key:string) => {
-        // @ts-ignore
-        const value: any = queryParams[key]
+      Object.keys(queryParams).forEach((key: string) => {
+        // @ts-expect-error is necessary as TS doesn't like us accessing properties with unknown names
+        const value: string = queryParams[key]
         if (Array.isArray(value)) {
-          value.forEach(value => {
-            queryArray.push(`${key}=${value}`)
+          value.forEach(itemValue => {
+            queryArray.push(`${key}=${itemValue}`)
           })
         } else {
           queryArray.push(`${key}=${value}`)

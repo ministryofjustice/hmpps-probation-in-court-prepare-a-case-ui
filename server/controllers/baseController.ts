@@ -1,8 +1,5 @@
-
-abstract class BaseController {
+export default abstract class BaseController {
   protected json(data: unknown, status = 200) {
-    return {data, status}
+    return { data, status }
   }
 }
-
-export {BaseController}
