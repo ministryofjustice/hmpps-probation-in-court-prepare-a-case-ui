@@ -1,5 +1,6 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 const express = require('express')
+// eslint-disable-next-line import/no-unresolved
 const sqlite3 = require('sqlite3').verbose()
 
 const app = express()
