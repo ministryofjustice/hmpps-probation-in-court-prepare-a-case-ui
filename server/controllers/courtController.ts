@@ -134,7 +134,7 @@ export default class CourtController extends BaseController {
       return res.redirect(302, `/${urlPath}/?success=false`)
     }
 
-    return res.redirect(302, `/${urlPath}/?success=true`)
+    return res.redirect(302, `/my-courts/?success=true`)
   }
 
   private getUrlPath(state:string): string {
