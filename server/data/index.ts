@@ -32,7 +32,7 @@ export const dataAccess = () => {
     exampleApiClient: new ExampleApiClient(hmppsAuthClient),
     hmppsAuditClient: new HmppsAuditClient(config.sqs.audit),
     courtCaseApiClient: new CourtCaseApiClient(hmppsAuthClient),
-    userPreferencesApiClient: new UserPreferencesApiClient(hmppsAuthClient),
+    userPreferencesApiClient: new UserPreferencesApiClient(),
   }
 }
 

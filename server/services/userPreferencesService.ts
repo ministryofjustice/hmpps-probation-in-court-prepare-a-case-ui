@@ -1,6 +1,7 @@
 import UserPreferencesApiClient from '../data/userPreferencesApiClient'
 import config from '../config'
 import { UserPreferencesResponse } from '../@types/UserPreferencesResponse'
+import {UserCourtsResponse} from "../@types/UserCourtsResponse";
 
 export default class UserPreferencesService {
   public client: UserPreferencesApiClient
@@ -9,12 +10,12 @@ export default class UserPreferencesService {
     this.client = client
   }
 
-  getCourts = async (userId: string, token: string): Promise<UserPreferencesResponse> => {
+  getCourts = async (userId: string, token: string): Promise<UserCourtsResponse> => {
     return this.client.getCourts(userId, token)
   }
 
-  updateCourts = async (userId: string, courts: string[]): Promise<object> => {
-    return this.client.updateCourts(userId, courts)
+  updateCourts = async (userId: string, courts: string[], token: string): Promise<object> => {
+    return this.client.updateCourts(userId, courts, token)
   }
 
   getPreferences = async (userId: string, preference: string, token: string): Promise<UserPreferencesResponse> => {
@@ -22,7 +23,7 @@ export default class UserPreferencesService {
   }
 
   // TODO: find better solution than passing the token as param on every request
-  updatePreferences = async (userId: string, preference: string, values: [], token: string) => {
+  updatePreferences = async (userId: string, preference: string, values: object, token: string): Promise<object> => {
     return this.client.updatePreferences(userId, preference, values, token)
   }
 
@@ -40,8 +41,7 @@ export default class UserPreferencesService {
       const splitItem = (item: string) => {
         return item.split('=')
       }
-
-      userPreferences.items.forEach((item: string) => {
+      Object.keys(userPreferences.items).forEach((item: string) => {
         const [key, value] = splitItem(item)
 
         if (key === 'validDate') {
@@ -86,7 +86,7 @@ export default class UserPreferencesService {
     return {}
   }
 
-  setFilters = async (userId: string, filterType: string, filters: [], token: string) => {
+  setFilters = async (userId: string, filterType: string, filters: object, token: string) => {
     const constructPersistentFilter = (queryParams: object) => {
       const queryArray = []
 

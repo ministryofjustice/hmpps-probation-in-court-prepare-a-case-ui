@@ -2,20 +2,26 @@ import { RestClient, asUser } from '@ministryofjustice/hmpps-rest-client'
 import config from '../config'
 import logger from '../../logger'
 import { UserPreferencesResponse } from '../@types/UserPreferencesResponse'
+import {UserCourtsResponse} from "../@types/UserCourtsResponse";
 
 export default class UserPreferencesApiClient extends RestClient {
   constructor() {
     super('User Preferences API', config.apis.userPreferencesApi, logger)
   }
 
-  toJson(jsonString: string): UserPreferencesResponse {
-    if (typeof jsonString === 'string') {
-      return JSON.parse(jsonString)
-    }
-    return jsonString
+  toJson(jsonString: string): object {
+    return (typeof jsonString === 'string') ? JSON.parse(jsonString) : jsonString
   }
 
-  async getCourts(userId: string, token: string): Promise<UserPreferencesResponse> {
+  toUserCourts(jsonString: string): UserCourtsResponse {
+    return (typeof jsonString === 'string') ? JSON.parse(jsonString) : jsonString
+  }
+
+  toUserPreferences(jsonString: string): UserPreferencesResponse {
+    return (typeof jsonString === 'string') ? JSON.parse(jsonString) : jsonString
+  }
+
+  async getCourts(userId: string, token: string): Promise<UserCourtsResponse> {
     const jsonString: string = await this.get<string>(
       {
         path: `/users/${userId}/preferences/courts`,
@@ -23,7 +29,7 @@ export default class UserPreferencesApiClient extends RestClient {
       },
       asUser(token),
     )
-    return this.toJson(jsonString)
+    return  this.toUserCourts(jsonString)
   }
 
   async updateCourts(userId: string, courts: string[], token: string): Promise<object> {
@@ -46,7 +52,7 @@ export default class UserPreferencesApiClient extends RestClient {
       },
       asUser(token),
     )
-    return this.toJson(jsonString)
+    return this.toUserPreferences(jsonString)
   }
 
   async updatePreferences(userId: string, preference: string, values: Object, token: string): Promise<object> {

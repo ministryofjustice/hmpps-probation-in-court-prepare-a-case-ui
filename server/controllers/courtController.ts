@@ -123,7 +123,7 @@ export default class CourtController extends BaseController {
       params: { state },
     } = req
     const urlPath = this.getUrlPath(state)
-    const { userId } = res.locals.user
+    const { userId, token } = res.locals.user
 
     if (!Object.prototype.hasOwnProperty.call(session, 'courts')) {
       req.flash('formError', 'Please choose a court.')
@@ -131,7 +131,7 @@ export default class CourtController extends BaseController {
     }
 
     try {
-      await this.service.updateCourts(userId, session.courts)
+      await this.service.updateCourts(userId, session.courts, token)
     } catch (error) {
       logger.error(`Error calling getCourts for userId '${userId}':`, error)
       req.flash('serverError', 'Unable to store your courts list, please try again later.')
