@@ -90,6 +90,8 @@ export default {
         deadline: Number(get('DEFAULT_TIMEOUT', 5000)),
       },
       agent: new AgentConfig(Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000))),
+      //TODO: set this to true, (I'm setting it to false so integration tests in the pipeline)
+      enabled: false
     },
     courtCaseServiceApi: {
       url: get('COURT_CASE_SERVICE_URL', 'http://localhost:9092', requiredInProduction),
@@ -99,6 +101,8 @@ export default {
         deadline: Number(get('DEFAULT_TIMEOUT', 5000)),
       },
       agent: new AgentConfig(Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000))),
+      //TODO: set this to true when we implement this API
+      enabled: false
     },
   },
   sqs: {
