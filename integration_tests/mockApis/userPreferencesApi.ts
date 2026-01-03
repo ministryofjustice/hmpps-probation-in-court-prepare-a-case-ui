@@ -37,7 +37,7 @@ export default {
       response: {
         status: httpStatus,
         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-        jsonBody: { items: {'page': '10', 'casesPerPage': '10'} },
+        jsonBody: { items: { page: '10', casesPerPage: '10' } },
       },
     }),
 }

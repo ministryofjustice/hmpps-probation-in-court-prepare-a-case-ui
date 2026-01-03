@@ -1,8 +1,8 @@
 import UserPreferencesApiClient from '../data/userPreferencesApiClient'
 import UserPreferencesService from './userPreferencesService'
-import createUserToken from "../testutils/createUserToken";
-import {UserPreferencesResponse} from "../@types/UserPreferencesResponse";
-import {UserCourtsResponse} from "../@types/UserCourtsResponse";
+import createUserToken from '../testutils/createUserToken'
+import { UserPreferencesResponse } from '../@types/UserPreferencesResponse'
+import { UserCourtsResponse } from '../@types/UserCourtsResponse'
 
 jest.mock('../data/userPreferencesApiClient')
 
@@ -15,8 +15,8 @@ describe('UserPreferencesService', () => {
   })
 
   it('should call getCourts on the api client and return its result', async () => {
-    const expectedCourts: UserCourtsResponse = {items: ['B14LO', 'B34JS', 'B20BL']}
-    const userId = "608955ae-52ed-44cc-884c-011597a77949"
+    const expectedCourts: UserCourtsResponse = { items: ['B14LO', 'B34JS', 'B20BL'] }
+    const userId = '608955ae-52ed-44cc-884c-011597a77949'
     const userToken = createUserToken([])
 
     apiClient.getCourts.mockResolvedValue(expectedCourts)
@@ -29,7 +29,7 @@ describe('UserPreferencesService', () => {
 
   it('should call updateCourts on the api client and return its result', async () => {
     const courts = ['B14LO', 'B34JS', 'B20BL']
-    const userId = "608955ae-52ed-44cc-884c-011597a77949"
+    const userId = '608955ae-52ed-44cc-884c-011597a77949'
     const userToken = createUserToken([])
 
     apiClient.updateCourts.mockResolvedValue({})
@@ -41,8 +41,8 @@ describe('UserPreferencesService', () => {
   })
 
   it('should call getPreferences on the api client and return its result', async () => {
-    const expectedPreferences: UserPreferencesResponse = {items: {'page': '10', 'casesPerPage': '10'}}
-    const userId = "608955ae-52ed-44cc-884c-011597a77949"
+    const expectedPreferences: UserPreferencesResponse = { items: { page: '10', casesPerPage: '10' } }
+    const userId = '608955ae-52ed-44cc-884c-011597a77949'
     const userToken = createUserToken([])
 
     apiClient.getPreferences.mockResolvedValue(expectedPreferences)
@@ -54,8 +54,8 @@ describe('UserPreferencesService', () => {
   })
 
   it('should call updatePreferences on the api client and return its result', async () => {
-    const preferenceValues = {'page': '10', 'casesPerPage': '10'}
-    const userId = "608955ae-52ed-44cc-884c-011597a77949"
+    const preferenceValues = { page: '10', casesPerPage: '10' }
+    const userId = '608955ae-52ed-44cc-884c-011597a77949'
     const userToken = createUserToken([])
 
     apiClient.updatePreferences.mockResolvedValue({})
@@ -65,5 +65,4 @@ describe('UserPreferencesService', () => {
     expect(apiClient.updatePreferences).toHaveBeenCalledTimes(1)
     expect(result).toEqual({})
   })
-
 })

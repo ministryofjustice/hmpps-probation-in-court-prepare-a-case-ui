@@ -1,7 +1,7 @@
 import UserPreferencesApiClient from '../data/userPreferencesApiClient'
 import config from '../config'
 import { UserPreferencesResponse } from '../@types/UserPreferencesResponse'
-import {UserCourtsResponse} from "../@types/UserCourtsResponse";
+import { UserCourtsResponse } from '../@types/UserCourtsResponse'
 
 export default class UserPreferencesService {
   public client: UserPreferencesApiClient
