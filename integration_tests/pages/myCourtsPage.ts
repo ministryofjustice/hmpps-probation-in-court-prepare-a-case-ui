@@ -6,10 +6,13 @@ export default class MyCourtsPage extends AbstractPage {
 
   readonly courtSelection: Locator
 
+  readonly usersName: Locator
+
   private constructor(page: Page) {
     super(page)
     this.header = page.locator('h1', { hasText: 'My courts' })
     this.courtSelection = page.getByText("Sheffield Magistrates' Court")
+    this.usersName = page.getByTestId('header-user-name')
   }
 
   static async verifyOnPage(page: Page): Promise<MyCourtsPage> {

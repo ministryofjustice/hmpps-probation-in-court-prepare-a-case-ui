@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test'
 import hmppsAuth from '../mockApis/hmppsAuth'
-import exampleApi from '../mockApis/exampleApi'
+import userPreferencesApi from '../mockApis/userPreferencesApi'
 
 import { login, resetStubs } from '../testUtils'
-import HomePage from '../pages/homePage'
+import MyCourtsPage from '../pages/myCourtsPage'
 
 test.describe('SignIn', () => {
   test.beforeEach(async () => {
-    await exampleApi.stubExampleTime()
+    await userPreferencesApi.stubGetCourts()
   })
 
   test.afterEach(async () => {
@@ -31,24 +31,24 @@ test.describe('SignIn', () => {
   test('User name visible in header', async ({ page }) => {
     await login(page, { name: 'A TestUser' })
 
-    const homePage = await HomePage.verifyOnPage(page)
+    const myCourtsPage = await MyCourtsPage.verifyOnPage(page)
 
-    await expect(homePage.usersName).toHaveText('A. Testuser')
+    await expect(myCourtsPage.usersName).toHaveText('A. Testuser')
   })
 
   test('Phase banner visible in header', async ({ page }) => {
     await login(page)
 
-    const homePage = await HomePage.verifyOnPage(page)
+    const myCourtsPage = await MyCourtsPage.verifyOnPage(page)
 
-    await expect(homePage.phaseBanner).toHaveText('dev')
+    await expect(myCourtsPage.phaseBanner).toHaveText('dev')
   })
 
   test('User can sign out', async ({ page }) => {
     await login(page)
 
-    const homePage = await HomePage.verifyOnPage(page)
-    await homePage.signOut()
+    const myCourtsPage = await MyCourtsPage.verifyOnPage(page)
+    await myCourtsPage.signOut()
 
     await expect(page.getByRole('heading')).toHaveText('Sign in')
   })
@@ -58,8 +58,8 @@ test.describe('SignIn', () => {
 
     await hmppsAuth.stubManageDetailsPage()
 
-    const homePage = await HomePage.verifyOnPage(page)
-    await homePage.clickManageUserDetails()
+    const myCourtsPage = await MyCourtsPage.verifyOnPage(page)
+    await myCourtsPage.clickManageUserDetails()
 
     await expect(page.getByRole('heading')).toHaveText('Your account details')
   })
@@ -77,7 +77,7 @@ test.describe('SignIn', () => {
 
     await login(page, { name: 'Some OtherTestUser', active: true })
 
-    const homePage = await HomePage.verifyOnPage(page)
-    await expect(homePage.usersName).toHaveText('S. Othertestuser')
+    const myCourtsPage = await MyCourtsPage.verifyOnPage(page)
+    await expect(myCourtsPage.usersName).toHaveText('S. Othertestuser')
   })
 })
