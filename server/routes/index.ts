@@ -9,13 +9,12 @@ import { asyncHandler } from '../utils/utils'
 
 export default function routes({
   auditService,
-  exampleService,
   userPreferencesService,
   courtCaseService,
 }: Services): Router {
   const router = Router()
 
-  const staticPageController = new StaticPageController(auditService, exampleService)
+  const staticPageController = new StaticPageController(auditService)
   const courtController = new CourtController(userPreferencesService)
   const caseController = new CaseController(courtCaseService)
   const outcomesController = new OutcomeController(courtCaseService)

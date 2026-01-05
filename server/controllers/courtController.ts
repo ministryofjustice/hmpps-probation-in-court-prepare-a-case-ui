@@ -51,7 +51,7 @@ export default class CourtController extends BaseController {
       params: { courtCode },
     } = req
 
-    return res.status(201).cookie('currentCourt', courtCode).redirect(302, `/${courtCode}/cases`)
+    return res.cookie('currentCourt', courtCode).redirect(302, `/${courtCode}/cases`)
   }
 
   edit = async (req: Request, res: Response): Promise<void> => {

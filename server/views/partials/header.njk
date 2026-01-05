@@ -34,6 +34,11 @@
             </a>
           </li>
         {% endif %}
+        {% if not hideCourtLink %}
+          <li class="hmpps-header__navigation__item">
+            <a data-qa="myCourts" class="hmpps-header__link" href="/my-courts">My courts</a>
+          </li>
+        {% endif %}
 
         <li class="hmpps-header__navigation__item">
           <a data-qa="signOut" class="hmpps-header__link" href="/sign-out">Sign out</a>

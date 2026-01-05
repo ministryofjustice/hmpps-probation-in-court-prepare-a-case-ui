@@ -2,6 +2,7 @@ import express, { Express } from 'express'
 import { NotFound } from 'http-errors'
 
 import { randomUUID } from 'crypto'
+import cookieParser from 'cookie-parser'
 import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
@@ -31,6 +32,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => H
   app.set('view engine', 'njk')
 
   nunjucksSetup(app)
+  app.use(cookieParser())
   app.use(setUpWebSession())
   app.use((req, res, next) => {
     req.user = userSupplier() as Express.User
