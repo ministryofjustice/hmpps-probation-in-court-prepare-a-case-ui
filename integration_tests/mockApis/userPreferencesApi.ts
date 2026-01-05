@@ -19,7 +19,8 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/users/{userId}/preferences/courts`,
+        // match any user id in the path
+        urlPattern: '/users/.*/preferences/courts',
       },
       response: {
         status: httpStatus,
@@ -32,7 +33,8 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/users/{userId}/preferences/{preference}`,
+        // match any user id and preference in the path
+        urlPattern: '/users/.*/preferences/.*',
       },
       response: {
         status: httpStatus,
