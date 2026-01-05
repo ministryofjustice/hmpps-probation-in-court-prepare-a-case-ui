@@ -27,8 +27,6 @@ describe('GET /', () => {
   it('should redirect user to chose a court or the case list for chosen court', () => {
     auditService.logPageView.mockResolvedValue(null)
 
-    return request(app)
-      .get('/')
-      .expect(302)
+    return request(app).get('/').expect(302)
   })
 })

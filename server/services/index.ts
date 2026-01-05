@@ -4,8 +4,7 @@ import UserPreferencesService from './userPreferencesService'
 import CourtCaseService from './courtCaseService'
 
 export const services = () => {
-  const { applicationInfo, hmppsAuditClient, userPreferencesApiClient, courtCaseApiClient } =
-    dataAccess()
+  const { applicationInfo, hmppsAuditClient, userPreferencesApiClient, courtCaseApiClient } = dataAccess()
 
   return {
     applicationInfo,

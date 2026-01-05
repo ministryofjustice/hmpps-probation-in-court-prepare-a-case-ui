@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import BaseController from './baseController'
-import AuditService, { Page } from '../services/auditService'
+import AuditService from '../services/auditService'
 
 export default class StaticPageController extends BaseController {
   private auditService: AuditService

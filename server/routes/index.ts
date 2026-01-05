@@ -7,11 +7,7 @@ import OutcomeController from '../controllers/outcomeController'
 import StaticPageController from '../controllers/staticPageController'
 import { asyncHandler } from '../utils/utils'
 
-export default function routes({
-  auditService,
-  userPreferencesService,
-  courtCaseService,
-}: Services): Router {
+export default function routes({ auditService, userPreferencesService, courtCaseService }: Services): Router {
   const router = Router()
 
   const staticPageController = new StaticPageController(auditService)
