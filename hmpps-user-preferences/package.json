@@ -1,7 +1,7 @@
 {
   "name": "hmpps-user-preferences-mock",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "seed": "sqlite3 preferences.db < schema.sql"
   },

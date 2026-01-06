@@ -8,11 +8,11 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY package-lock.json ./
 COPY schema.sql ./
-copy index.js ./
+copy index.ts ./
 RUN npm i
 RUN npm run seed
 EXPOSE 3000
 
 
 
-CMD [ "node",  "index.js"]
+CMD [ "node",  "index.ts"]

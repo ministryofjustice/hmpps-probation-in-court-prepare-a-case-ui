@@ -1,12 +1,13 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-const express = require('express')
-// eslint-disable-next-line import/no-unresolved
-const sqlite3 = require('sqlite3').verbose()
+import express, { Request, Response } from 'express'
+
+import SQLite3, { Database } from 'sqlite3'
 
 const app = express()
 const port = process.env.PORT || 3000
 
-const db = new sqlite3.Database('./preferences.db', err => {
+SQLite3.verbose()
+const db = new Database('./preferences.db', (err: Error) => {
   if (err) {
     console.error(err.message)
   }
@@ -15,21 +16,32 @@ const db = new sqlite3.Database('./preferences.db', err => {
 
 app.use(express.json())
 
-app.get('/users/:userId/preferences/:preferenceName', (req, res) => {
+type Preference = {
+  id: number
+  hmpps_user_id: string
+  name: string
+  value: string
+}
+
+app.get('/users/:userId/preferences/:preferenceName', (req: Request, res: Response) => {
   const { userId, preferenceName } = req.params
-  db.all('SELECT * FROM preference WHERE hmpps_user_id = ? and name = ?', [userId, preferenceName], (err, rows) => {
-    if (err) {
-      console.error(err.message)
-      res.status(500).send('Internal server error')
-    } else if (!rows) {
-      res.status(404).send('Preference not found')
-    } else {
-      res.send({ items: rows.map(row => row.value) })
-    }
-  })
+  db.all(
+    'SELECT * FROM preference WHERE hmpps_user_id = ? and name = ?',
+    [userId, preferenceName],
+    (err: Error, rows: Preference[]) => {
+      if (err) {
+        console.error(err.message)
+        res.status(500).send('Internal server error')
+      } else if (!rows) {
+        res.status(404).send('Preference not found')
+      } else {
+        res.send({ items: rows.map(row => row.value) })
+      }
+    },
+  )
 })
 
-app.put('/users/:userId/preferences/:preferenceName', (req, res) => {
+app.put('/users/:userId/preferences/:preferenceName', (req: Request, res: Response) => {
   const { userId, preferenceName } = req.params
   const { items } = req.body
   if (!items) {
@@ -37,15 +49,15 @@ app.put('/users/:userId/preferences/:preferenceName', (req, res) => {
   } else {
     const deleteSql = 'DELETE FROM preference WHERE hmpps_user_id = ? and name = ?'
 
-    db.run(deleteSql, [userId, preferenceName], function deleteCallback(deleteError) {
+    db.run(deleteSql, [userId, preferenceName], function deleteCallback(deleteError: Error) {
       if (deleteError) {
         console.error(deleteError.message)
         res.status(500).send('Internal server error')
       } else {
         const placeholders = items.map(() => '(?, ?, ?)').join(', ')
         const putSql = `INSERT INTO preference (hmpps_user_id, name, value) VALUES ${placeholders}`
-        const params = items.flatMap(item => [userId, preferenceName, item])
-        db.run(putSql, params, function writeCallback(writeError) {
+        const params = items.flatMap((item: string[]) => [userId, preferenceName, item])
+        db.run(putSql, params, function writeCallback(writeError: Error) {
           if (writeError) {
             console.error(writeError.message)
             res.status(500).send('Internal server error')
@@ -58,12 +70,12 @@ app.put('/users/:userId/preferences/:preferenceName', (req, res) => {
   }
 })
 
-app.delete('/users/:userId/preferences/:preferenceName', (req, res) => {
+app.delete('/users/:userId/preferences/:preferenceName', (req: Request, res: Response) => {
   const { userId, preferenceName } = req.params
 
   const deleteSql = 'DELETE FROM preference WHERE hmpps_user_id = ? and name = ?'
 
-  db.run(deleteSql, [userId, preferenceName], function deleteCallback(err) {
+  db.run(deleteSql, [userId, preferenceName], function deleteCallback(err: Error) {
     if (err) {
       console.error(err.message)
       res.status(500).send('Internal server error')
