@@ -1,12 +1,13 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import express, { Request, Response } from 'express'
 
-import SQLite3, { Database } from 'sqlite3'
+import SQLite3 from 'sqlite3'
 
 const app = express()
 const port = process.env.PORT || 3000
 
 SQLite3.verbose()
+const { Database } = SQLite3
 const db = new Database('./preferences.db', (err: Error) => {
   if (err) {
     console.error(err.message)
