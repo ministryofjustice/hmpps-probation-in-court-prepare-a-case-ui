@@ -16,6 +16,12 @@ export default function routes({ auditService, userPreferencesService, courtCase
   const outcomesController = new OutcomeController(courtCaseService)
 
   router.get('/', asyncHandler(staticPageController.index))
+  router.get('/cookies-policy', asyncHandler(staticPageController.showCookiesPolicy))
+  router.get('/whats-new', asyncHandler(staticPageController.showWhatsNew))
+  router.get('/privacy-notice', asyncHandler(staticPageController.showPrivacyNotice))
+  router.get('/accessibility-statement', asyncHandler(staticPageController.showAccessibilityStatement))
+  router.get('/user-guide', asyncHandler(staticPageController.showUserGuide))
+
   router.get('/my-courts', asyncHandler(courtController.index))
   router.get('/my-courts/edit', asyncHandler(courtController.edit))
   router.get('/my-courts/setup', asyncHandler(courtController.setup))

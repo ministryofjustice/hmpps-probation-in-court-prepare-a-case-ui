@@ -18,6 +18,22 @@ export default class StaticPageController extends BaseController {
     return res.redirect(302, '/my-courts')
   }
 
+  showCookiesPolicy = async (req: Request, res: Response) => {
+    return res.render('pages/cookies-policy')
+  }
+
+  showWhatsNew = async (req: Request, res: Response) => {
+    return res.render('pages/whats-new')
+  }
+
+  showPrivacyNotice = async (req: Request, res: Response) => {
+    return res.render('pages/privacy-notice')
+  }
+
+  showAccessibilityStatement = async (req: Request, res: Response) => {
+    return res.render('pages/accessibility-statement')
+  }
+
   showUserGuide = async (req: Request, res: Response) => {
     return res.render('pages/user-guide')
   }

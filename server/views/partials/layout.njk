@@ -13,6 +13,36 @@
 {% block bodyStart %}
 {% endblock %}
 
+{% block footer %}
+  {%- from "govuk/components/footer/macro.njk" import govukFooter -%}
+  {{ govukFooter({
+    meta: {
+      items: [
+        {
+          href: "/user-guide",
+          text: "User guide"
+        },
+        {
+          href: "/accessibility-statement",
+          text: "Accessibility statement"
+        },
+        {
+          href: "/cookies-policy",
+          text: "Cookies"
+        },
+        {
+          href: "/privacy-notice",
+          text: "Privacy"
+        },
+        {
+          href: "/whats-new",
+          text: "What's new"
+        }
+      ]
+    }
+  }) }}
+{% endblock %}
+
 {% block bodyEnd %}
   <script type="module" src="{{ '/assets/js/index.js' | assetMap }}"></script>
 {% endblock %}
