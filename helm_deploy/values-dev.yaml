@@ -4,7 +4,7 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: prepare-a-case-dev.apps.live-1.cloud-platform.service.justice.gov.uk
+    host: prepare-a-case-ui-dev.apps.live-1.cloud-platform.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://prepare-a-case-dev.apps.live-1.cloud-platform.service.justice.gov.uk"
